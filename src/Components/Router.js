@@ -4,10 +4,12 @@ import Header from "./Header";
 import Movie from "../Screens/Movie";
 import Tv from "../Screens/Tv";
 import Search from "../Screens/Search";
-import Home from "./Home";
+import Home from "../Screens/Home";
 import Detail from "../Screens/Detail";
 import MoviesUpcoming from "../Screens/MoviesUpcoming";
 import MoviesNowPlaying from "../Screens/MoviesNowPlaying";
+import TvAiringToday from "../Screens/TvAiringToday";
+import TvTopRated from "../Screens/TvTopRated";
 
 const Router = () => (
     <HashRouter>
@@ -18,9 +20,13 @@ const Router = () => (
             <Route path="/movie/popular" exact component={Movie} />
             <Route path="/movie/upcoming" exact component={MoviesUpcoming} />
             <Route path="/movie/now_playing" exact component={MoviesNowPlaying} />
-            <Route path="/tv" component={Tv} />
-            <Route path="/search" component={Search} />
             <Route path='/movie/:id' component={Detail} />
+            <Route path="/tv" exact component={Tv} />
+            <Route path="/tv/popular" exact component={Tv} />
+            <Route path="/tv/airing_today" exact component={TvAiringToday} />
+            <Route path="/tv/top_rated" exact component={TvTopRated} />
+            <Route path='/tv/:id' component={Detail} />
+            <Route path="/search" component={Search} />
             <Redirect from="*" to="/" />
         </Switch>
     </HashRouter>

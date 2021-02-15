@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const Section = styled.div`
 `;
@@ -39,20 +40,23 @@ const ItemTitle = styled.div`
     padding-top: 10px;
 `;
 
-const MovieContainer = ({title, children}) => {console.log(children); return(
+const TvContainer = ({title, children}) => {console.log(children); return(
     <Section>
     <SectionTitle>{title}</SectionTitle>
     <GridContainer>
-    {children.map(child => <Item>
-    <ItemImage src={`https://image.tmdb.org/t/p/w500/${child.poster_path}`} />
-    <ItemTitle>{child.name.length >= 10 ? `${child.name}...` : child.name}</ItemTitle>
-    
-    </Item>)}
+    {children.map(child => 
+    <Link to={`/tv/${child.id}`}>
+        <Item>
+            <ItemImage src={`https://image.tmdb.org/t/p/w500/${child.poster_path}`} />
+            <ItemTitle>{child.name.length >= 10 ? `${child.name}...` : child.name}</ItemTitle>
+        </Item>
+    </Link>
+        )}
     </GridContainer>
     </Section>
 )};
 
-MovieContainer.propTypes = {
+TvContainer.propTypes = {
     title: PropTypes.string,
     children: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string,
@@ -61,4 +65,4 @@ MovieContainer.propTypes = {
     }))}
 
 
-export default MovieContainer;
+export default TvContainer;

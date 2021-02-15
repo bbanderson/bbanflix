@@ -67,7 +67,7 @@ const Header = withRouter(({location: {pathname}, history}) => (
             <List>
                 <Item currentTab={pathname === '/'}><Link to="/">홈</Link></Item>
                 <Item currentTab={pathname.includes('/movie')}><Link to="/movie/popular">영화</Link></Item>
-                <Item currentTab={pathname.includes('/tv')}><Link to="/tv">TV 프로그램</Link></Item>
+                <Item currentTab={pathname.includes('/tv')}><Link to="/tv/popular">TV 프로그램</Link></Item>
                 <Item currentTab={pathname.includes('/search')}><Link to="/search">🔍</Link></Item>
             </List>
         </Nav>
@@ -81,17 +81,23 @@ const Header = withRouter(({location: {pathname}, history}) => (
                 <Link to="/movie/now_playing"><SubHeaderBtn currentTab={pathname === '/movie/now_playing'}>최신 영화</SubHeaderBtn></Link>
             </SubHeaderMovie>
         )}
+        {pathname.includes('/tv') && ['p', 'a', 't'].includes(pathname.split('/tv/')[1][0]) && (
+            <SubHeaderMovie currentPage={pathname.includes('/tv')}>
+                <Link to="/tv/popular"><SubHeaderBtn currentTab={pathname === '/tv/popular'}>인기 100선</SubHeaderBtn></Link>
+                <Link to="/tv/airing_today"><SubHeaderBtn currentTab={pathname === '/tv/airing_today'}>오늘 방영</SubHeaderBtn></Link>
+                <Link to="/tv/top_rated"><SubHeaderBtn currentTab={pathname === '/tv/top_rated'}>최고 평점</SubHeaderBtn></Link>
+            </SubHeaderMovie>
+        )}
         {pathname !== "/" && pathname.includes('/movie') && !['p', 'n', 'u'].includes(pathname.split('/movie/')[1][0]) && (
             <SubHeaderMovie currentPage={pathname.includes('/movie')}>
             {console.log(history)}
                 <SubHeaderBtn onClick={history.goBack}>뒤로 가기</SubHeaderBtn>
             </SubHeaderMovie>
         )}
-        {pathname.includes('/tv') && (
-            <SubHeaderMovie currentPage={pathname.includes('/tv')}>
-                <Link to="/tv/popular"><SubHeaderBtn currentTab={pathname === '/tv/popular'}>인기 100선</SubHeaderBtn></Link>
-                <Link to="/tv/upcoming"><SubHeaderBtn currentTab={pathname === '/tv/upcoming'}>개봉 예정</SubHeaderBtn></Link>
-                <Link to="/tv/now_playing"><SubHeaderBtn currentTab={pathname === '/tv/now_playing'}>최신 영화</SubHeaderBtn></Link>
+        {pathname !== "/" && pathname.includes('/tv') && !['p', 'a', 't'].includes(pathname.split('/tv/')[1][0]) && (
+            <SubHeaderMovie currentPage={pathname.includes('/movie')}>
+            {console.log(history)}
+                <SubHeaderBtn onClick={history.goBack}>뒤로 가기</SubHeaderBtn>
             </SubHeaderMovie>
         )}
     </Container>

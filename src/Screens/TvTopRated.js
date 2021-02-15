@@ -6,23 +6,24 @@ import InfiniteScroll from "../Components/InfiniteScroll";
 const Tv = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [popular, setPopular] = useState([]);
+    const [topRated, setTopRated] = useState([]);
     const page = InfiniteScroll();
-    console.log(popular)
-    const getPopular = async () => {
+    console.log(page)
+    console.log(topRated)
+    const getTopRated = async () => {
         try {
-            const {data: {results}} = await tvApi.getPopular();
-            setPopular(results);
+            const {data: {results}} = await tvApi.getTopRated(page);
+            setTopRated(results);
         } catch (error) {
             setError(error)
         } finally {
             setLoading(false);
         }
     }
-    const getMorePopular = async () => {
+    const getMoreTopRated = async () => {
         try {
-            const {data: {results: newPopular}} = await tvApi.getPopular(page);
-            setPopular([...popular, ...newPopular]);
+            const {data: {results: newAiringToday}} = await tvApi.getTopRated(page);
+            setTopRated([...topRated, ...newAiringToday]);
         } catch (error) {
             setError(error)
         } finally {
@@ -30,12 +31,12 @@ const Tv = () => {
         }
     }
     useEffect(() => {
-        getPopular();
+        getTopRated();
     }, [])
     useEffect(() => {
-        getMorePopular();
+        getMoreTopRated();
     }, [page])
-    return loading ? "Loading": <TvContainer>{popular}</TvContainer>
+    return loading ? "Loading": <TvContainer>{topRated}</TvContainer>
 }
 
 export default Tv;

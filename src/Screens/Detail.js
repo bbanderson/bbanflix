@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { movieApi } from "../api";
+import { movieApi, tvApi } from "../api";
 import DetailContainer from "../Components/DetailContainer";
 
 const Detail = ({location: {pathname}, match: {params: {id}}}) => {
@@ -8,8 +8,13 @@ const Detail = ({location: {pathname}, match: {params: {id}}}) => {
     const [detail, setDetail] = useState([]);
     const getDetail = async (id) => {
         try {
-            const {data: newDetail} = await movieApi.getDetail(id);
-            setDetail(newDetail);
+            if (pathname.includes('/movie/')) {
+                const {data: newDetail} = await movieApi.getDetail(id);
+                setDetail(newDetail);
+            } else {
+                const {data: newDetail} = await tvApi.getDetail(id);
+                setDetail(newDetail);
+            }
         } catch (error) {
             setError(error)
         } finally {

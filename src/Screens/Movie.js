@@ -3,6 +3,7 @@ import { movieApi } from "../api";
 import MovieContainer from "../Components/MovieContainer";
 import InfiniteScroll from "../Components/InfiniteScroll";
 import SubHeaderMovie from "../Components/SubHeaderMovie";
+import Loader from "../Components/Loader";
 
 const Movie = () => {
     const [loading, setLoading] = useState(true);
@@ -37,7 +38,7 @@ const Movie = () => {
     useEffect(() => {
         getMorePopular();
     }, [page])
-    return loading ? "Loading": <MovieContainer>{popular}</MovieContainer>
+    return loading ? <Loader /> : <MovieContainer>{popular}</MovieContainer>
 }
 
 export default Movie;

@@ -31,6 +31,9 @@ const ImagePart = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 564px;
+    height: 847px;
+    /* size: 564px 847px; */
 `;
 
 const InfoPart = styled.div`
@@ -57,8 +60,8 @@ const Poster = styled.div`
     background-image: url(${props => props.src});
     background-size: cover;
     background-position: center;
-    width: 300px;
-    height: 400px;
+    width: 100%;
+    height: 100%;
     transition: opacity .2s linear;
     align-items: center;
     vertical-align: middle;
@@ -122,10 +125,10 @@ const DetailContainer = ({title, children}) => {console.log(children);
             </ImagePart>
             <InfoPart>
             {/* imdb_id, runtime, release_date.substring(0,5) */}
-                <Title>{children.title}<Imdb href={`https://www.imdb.com/title/${children.imdb_id}`} target="_blank"><i class="fab fa-imdb"></i></Imdb></Title>
+                <Title>{children.title || children.name}{children.imdb_id && <Imdb href={`https://www.imdb.com/title/${children.imdb_id}`} target="_blank"><i class="fab fa-imdb"></i></Imdb>}</Title>
                 <Description>
-                    <ReleaseDate>{children && children.release_date && children.release_date.substring(0, 4)}</ReleaseDate>
-                    <RunTime>{children && children.runtime}분</RunTime>
+                    <ReleaseDate>{(children && children.release_date && children.release_date.substring(0, 4)) || (children && children.first_air_date && children.first_air_date.substring(0, 4))}</ReleaseDate>
+                    <RunTime>{(children && children.runtime) || (children && children.episode_run_time && children.episode_run_time[0])}분</RunTime>
                     <GenresContainer>{children && children.genres && children.genres.map((genre, index) => <Genre key={index}>{genre.name}</Genre>)}</GenresContainer>
                 </Description>
                 <Overview>{children && children.overview}</Overview>

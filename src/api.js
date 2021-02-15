@@ -33,9 +33,35 @@ export const movieApi = {
         params: {
             append_to_response: 'videos'
         }
+    }),
+
+    search: (term, page) => api.get('search/movie', {
+        params: {
+            query: term,
+            page
+        }
     })
 }
 
 export const tvApi = {
-    getPopular: () => api.get('tv/popular')
+    getPopular: (page) => api.get('tv/popular', {
+        params: {
+            page
+        }
+    }),
+    getAiringToday: (page) => api.get('tv/airing_today', {
+        params: {
+            page
+        }
+    }),
+    getTopRated: (page) => api.get('tv/top_rated', {
+        params: {
+            page
+        }
+    }),
+    getDetail: (id) => api.get(`tv/${id}`, {
+        params: {
+            append_to_response: 'videos'
+        }
+    })
 }
