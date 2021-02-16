@@ -5,7 +5,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import ReactPlayer from "react-player";
+import { Link, Route } from "react-router-dom";
+import TrailerContainer from "../Components/Trailer";
 
 const Title = styled.div`
     font-size: 2rem;
@@ -74,15 +75,6 @@ const Overview = styled.div`
     font-size: 1.1rem;
 `;
 
-const Trailer = styled.div`
-    width: 100%;
-    height: 100%;
-    top:0;
-    left:0;
-    /* position: relative; */
-    border-radius: 5px;
-`;
-
 const Description = styled.div`
     margin: 30px 0;
     padding: 0 5px;
@@ -124,7 +116,7 @@ const ProductionItem = styled.span`
     }
 `;
 
-const DetailContainer = ({title, children}) => {console.log(children);
+const DetailContainer = ({title, children, path}) => {console.log(children);
     return(
         <>
         <Background src={`https://image.tmdb.org/t/p/original/${children.backdrop_path}`} />
@@ -143,11 +135,9 @@ const DetailContainer = ({title, children}) => {console.log(children);
                 <Overview>{children && children.overview}</Overview>
                 <ProductionCompanies>배급사 : {children.production_companies && children.production_companies.map(company => <ProductionItem>{company.name}</ProductionItem>)}</ProductionCompanies>
                 <ProductionCountries>소유국 : {children.production_countries && children.production_countries.map(country => <ProductionItem>{country.name}</ProductionItem>)}</ProductionCountries>
+                <Route path={`/movie/:id/trailer/:count`} component={TrailerContainer} />
+                    {children.videos && children.videos.results.map((video, index) => <Link to={`/movie/${path}/trailer/${index + 1}`} data={video}><span>예고편 {index + 1}</span></Link>)}
 
-                    {children.videos && children.videos.results.map((video, index) => <span>예고편 {index + 1}</span>)}
-                <Trailer>
-                    {children.videos && children.videos.results[0] && children.videos.results[0].key && <ReactPlayer url={`https://www.youtube.com/watch?v=${children.videos.results[0].key}`} muted={true} autoPlay={false} controls={true} />}
-                </Trailer>
             </InfoPart>
         </Container>
         </>
@@ -157,6 +147,7 @@ const DetailContainer = ({title, children}) => {console.log(children);
 
 DetailContainer.propTypes = {
     title: PropTypes.string,
+    path: PropTypes.number,
     children: PropTypes.objectOf(PropTypes.shape({
         title: PropTypes.string,
         overview: PropTypes.string,

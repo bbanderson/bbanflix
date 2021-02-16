@@ -27,7 +27,7 @@ const Detail = ({location: {pathname}, match: {params: {id}}}) => {
         getDetail(id);
     }, [])
 
-    return loading ? <Loader />: <DetailContainer title="세부">{detail}</DetailContainer>
+    return loading ? <Loader />: <DetailContainer title="세부" path={id}>{detail}</DetailContainer>
 }
 
 export default Detail;
