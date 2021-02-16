@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { movieApi, tvApi } from "../api";
 import DetailContainer from "../Components/DetailContainer";
+import Loader from "../Components/Loader";
 
 const Detail = ({location: {pathname}, match: {params: {id}}}) => {
     const [loading, setLoading] = useState(true);
@@ -26,7 +27,7 @@ const Detail = ({location: {pathname}, match: {params: {id}}}) => {
         getDetail(id);
     }, [])
 
-    return loading ? "Loading": <DetailContainer title="세부">{detail}</DetailContainer>
+    return loading ? <Loader />: <DetailContainer title="세부">{detail}</DetailContainer>
 }
 
 export default Detail;

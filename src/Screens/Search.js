@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { movieApi } from "../api";
+import { movieApi, tvApi } from "../api";
 import InfiniteScroll from "../Components/InfiniteScroll";
 import MovieContainer from "../Components/MovieContainer";
+import TvContainer from "../Components/TvContainer";
 
 const Input = styled.input`
     all: unset;
@@ -41,6 +42,29 @@ const Search = () => {
             setLoading(false)
         }
     }
+    const getTv = async () => {
+        try {
+            const {data: {results: movies}} = await tvApi.search(term, page);
+            setLoading(true);
+            setTv(movies);
+            console.log(movies);
+        } catch(e) {
+            console.log(e);
+        } finally {
+            setLoading(false)
+        }
+    }
+    const getMoreTv = async () => {
+        try {
+            const {data: {results: newTv}} = await tvApi.search(term, page);
+            setLoading(true);
+            setTv([...tv, ...newTv]);
+        } catch(e) {
+            console.log(e);
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const changeTerm = (e) => {
         const {target: {value}} = e;
@@ -50,16 +74,19 @@ const Search = () => {
     }
 
     useEffect(() => {
-        getMovies()
+        getMovies();
+        getTv();
     }, [term])
     useEffect(() => {
-        getMoreMovies()
+        getMoreMovies();
+        getMoreTv();
     }, [page])
 
     return (
         <>
             <Input placeholder="검색어를 입력해 주세요" maxLength="30" onChange={changeTerm} />
             <MovieContainer>{movies}</MovieContainer>
+            <TvContainer>{tv}</TvContainer>
         </>
     )
 }

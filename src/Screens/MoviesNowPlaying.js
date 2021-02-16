@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { movieApi } from "../api";
 import MovieContainer from "../Components/MovieContainer";
 import InfiniteScroll from "../Components/InfiniteScroll";
+import Loader from "../Components/Loader";
 
 const Movie = () => {
     const [loading, setLoading] = useState(true);
@@ -36,7 +37,7 @@ const Movie = () => {
     useEffect(() => {
         getMoreNowPlaying();
     }, [page])
-    return loading ? "Loading": <MovieContainer>{nowPlaying}</MovieContainer>
+    return loading ? <Loader /> : <MovieContainer>{nowPlaying}</MovieContainer>
 }
 
 export default Movie;

@@ -65,7 +65,7 @@ const Header = withRouter(({location: {pathname}, history}) => (
     <Container scroll={window.scrollY >= 100}>
         <Nav>
             <List>
-                <Item currentTab={pathname === '/'}><Link to="/">홈</Link></Item>
+                {/* <Item currentTab={pathname === '/'}><Link to="/">홈</Link></Item> */}
                 <Item currentTab={pathname.includes('/movie')}><Link to="/movie/popular">영화</Link></Item>
                 <Item currentTab={pathname.includes('/tv')}><Link to="/tv/popular">TV 프로그램</Link></Item>
                 <Item currentTab={pathname.includes('/search')}><Link to="/search">🔍</Link></Item>

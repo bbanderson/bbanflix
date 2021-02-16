@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { tvApi } from "../api";
 import TvContainer from "../Components/TvContainer";
 import InfiniteScroll from "../Components/InfiniteScroll";
+import Loader from "../Components/Loader";
 
 const Tv = () => {
     const [loading, setLoading] = useState(true);
@@ -35,7 +36,7 @@ const Tv = () => {
     useEffect(() => {
         getMorePopular();
     }, [page])
-    return loading ? "Loading": <TvContainer>{popular}</TvContainer>
+    return loading ? <Loader /> : <TvContainer>{popular}</TvContainer>
 }
 
 export default Tv;

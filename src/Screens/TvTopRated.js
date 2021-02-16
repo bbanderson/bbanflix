@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { tvApi } from "../api";
 import TvContainer from "../Components/TvContainer";
 import InfiniteScroll from "../Components/InfiniteScroll";
+import Loader from "../Components/Loader";
 
 const Tv = () => {
     const [loading, setLoading] = useState(true);
@@ -36,7 +37,7 @@ const Tv = () => {
     useEffect(() => {
         getMoreTopRated();
     }, [page])
-    return loading ? "Loading": <TvContainer>{topRated}</TvContainer>
+    return loading ? <Loader /> : <TvContainer>{topRated}</TvContainer>
 }
 
 export default Tv;

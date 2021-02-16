@@ -114,6 +114,15 @@ const Genre = styled.span`
     }
 `;
 
+const ProductionCompanies = styled.div``;
+
+const ProductionCountries = styled.div``;
+
+const ProductionItem = styled.span`
+    &:not(:last-child) {
+        margin-right: 10px;
+    }
+`;
 
 const DetailContainer = ({title, children}) => {console.log(children);
     return(
@@ -132,6 +141,10 @@ const DetailContainer = ({title, children}) => {console.log(children);
                     <GenresContainer>{children && children.genres && children.genres.map((genre, index) => <Genre key={index}>{genre.name}</Genre>)}</GenresContainer>
                 </Description>
                 <Overview>{children && children.overview}</Overview>
+                <ProductionCompanies>배급사 : {children.production_companies && children.production_companies.map(company => <ProductionItem>{company.name}</ProductionItem>)}</ProductionCompanies>
+                <ProductionCountries>소유국 : {children.production_countries && children.production_countries.map(country => <ProductionItem>{country.name}</ProductionItem>)}</ProductionCountries>
+
+                    {children.videos && children.videos.results.map((video, index) => <span>예고편 {index + 1}</span>)}
                 <Trailer>
                     {children.videos && children.videos.results[0] && children.videos.results[0].key && <ReactPlayer url={`https://www.youtube.com/watch?v=${children.videos.results[0].key}`} muted={true} autoPlay={false} controls={true} />}
                 </Trailer>
