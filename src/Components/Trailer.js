@@ -13,13 +13,12 @@ const Trailer = styled.div`
     border-radius: 5px;
 `;
 
-const TrailerContainer = ({data:video}) =>
+const TrailerContainer = ({location: {pathname}, match: {params: {key}}, data}) =>
+    // {console.log(pathname)}
      (
     <Container>
         <Trailer>
-        {console.log(video)}
-        {video && <ReactPlayer url={`https://www.youtube.com/watch?v=${video.key}`} muted={true} autoPlay={false} controls={true} />}
-            {/* {video.videos && video.videos.results[0] && video.videos.results[0].key && <ReactPlayer url={`https://www.youtube.com/watch?v=${video.videos.results[0].key}`} muted={true} autoPlay={false} controls={true} />} */}
+        {key && <ReactPlayer url={`https://www.youtube.com/watch?v=${key}`} muted={true} autoPlay={false} controls={true} />}
         </Trailer>
     </Container>
     )

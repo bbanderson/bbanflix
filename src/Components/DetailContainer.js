@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Link, Route } from "react-router-dom";
 import TrailerContainer from "../Components/Trailer";
+import SeasonContainer from "../Components/SeasonContainer";
 
 const Title = styled.div`
     font-size: 2rem;
@@ -116,7 +117,29 @@ const ProductionItem = styled.span`
     }
 `;
 
-const DetailContainer = ({title, children, path}) => {console.log(children);
+const TrailerHeader = styled.div`
+    margin: 30px 0;
+    width: 100%;
+`;
+const TrailerMenu = styled.button`
+    margin-right: 30px;
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+    margin-right: 30px;
+    border: 1px solid white;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline;
+    cursor: pointer;
+    background-color: ${props => props.currentTab ? "white" : "transparent"};
+    color: ${props => props.currentTab ? "black" : "white"};
+    transition: background-color .2s ease-in;
+    transition: color .2s ease-in;
+`;
+
+const DetailContainer = ({title, children, path, current}) => {console.log(children);console.log(current);
     return(
         <>
         <Background src={`https://image.tmdb.org/t/p/original/${children.backdrop_path}`} />
@@ -135,8 +158,10 @@ const DetailContainer = ({title, children, path}) => {console.log(children);
                 <Overview>{children && children.overview}</Overview>
                 <ProductionCompanies>배급사 : {children.production_companies && children.production_companies.map(company => <ProductionItem>{company.name}</ProductionItem>)}</ProductionCompanies>
                 <ProductionCountries>소유국 : {children.production_countries && children.production_countries.map(country => <ProductionItem>{country.name}</ProductionItem>)}</ProductionCountries>
-                <Route path={`/movie/:id/trailer/:count`} component={TrailerContainer} />
-                    {children.videos && children.videos.results.map((video, index) => <Link to={`/movie/${path}/trailer/${index + 1}`} data={video}><span>예고편 {index + 1}</span></Link>)}
+                <TrailerHeader>{children.videos && children.videos.results.map((video, index) => {return <Link to={`/movie/${path}/trailer/${video.key}`}><TrailerMenu currentTab={current && current.includes('/trailer/') && current.split('/trailer/')[1] == video.key}>예고편 {index + 1}</TrailerMenu></Link>})}</TrailerHeader>
+                <TrailerHeader>{children.seasons && children.seasons.map(season => <Link to={`/tv/${path}/season${String(season.poster_path).slice(0, -4)}`}><TrailerMenu currentTab={current && current.includes('/season/') && current.split('/season/')[1] === String(season.poster_path).slice(1,-4)}>{season.name}</TrailerMenu></Link>)}</TrailerHeader>
+                <Route path={`/movie/:id/trailer/:key`} component={TrailerContainer} />
+                <Route path={`/tv/:id/season/:key`} component={SeasonContainer} />
 
             </InfoPart>
         </Container>
